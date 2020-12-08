@@ -2,8 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.siva</groupId>
+	<modelVersion>4.2.2</modelVersion>
 	<artifactId>mulesoft-jenkins-ci-cd</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>mule</packaging>
@@ -79,7 +78,7 @@
          <plugin>
             <groupId>org.mule.tools.maven</groupId>
             <artifactId>mule-maven-plugin</artifactId>
-            <version>2.3.2</version>
+            <version>4.2.2</version>
             <configuration>
 		        <cloudHubDeployment>
 		            <uri>https://anypoint.mulesoft.com</uri>
@@ -102,13 +101,6 @@
                   </goals>
                </execution>
             </executions>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-deploy-plugin</artifactId>
-            <configuration>
-               <skip>true</skip>
-            </configuration>
          </plugin>
 		</plugins>
 	</build>
