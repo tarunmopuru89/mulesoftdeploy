@@ -6,7 +6,6 @@
 	<groupId>mulesample</groupId>
 	<artifactId>mulesoft-jenkins-ci-cd</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>mule</packaging>
 	<name>Mule mulesoft-jenkins-ci-cd Application</name>
 
     <properties>
