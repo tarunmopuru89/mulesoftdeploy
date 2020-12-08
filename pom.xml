@@ -1,24 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.javastreets</groupId>
-	<artifactId>mule-maven-deployment-demo</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
-	<packaging>mule</packaging>
-	<name>Mule mule-maven-deployment-demo Application</name>
+	<groupId>com.siva</groupId>
+	<artifactId>mulesoft-jenkins-ci-cd</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>mule</packaging>
+	<name>Mule mulesoft-jenkins-ci-cd Application</name>
 
-	<parent>
-		<groupId>com.javastreets</groupId>
-		<artifactId>mule-maven-parent-pom</artifactId>
-		<version>0.0.5-SNAPSHOT</version>
-		<relativePath>../mule-maven-parent-pom/pom.xml</relativePath>
-	</parent>
-
-	<properties>
-		<mule.version>3.9.0</mule.version>
-		<mule.tools.version>1.7</mule.tools.version>
+    <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<mule.version>3.8.4</mule.version>
+    	<mule.tools.version>1.7</mule.tools.version>
 	</properties>
 
 	<build>
@@ -29,25 +24,108 @@
 				<version>${mule.tools.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-					<copyToAppsDirectory>false</copyToAppsDirectory>
+                    <copyToAppsDirectory>true</copyToAppsDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.8.2</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>add-resource</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/main/app/</directory>
+								</resource>
+								<resource>
+									<directory>src/main/api/</directory>
+								</resource>
+								<resource>
+									<directory>mappings/</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
+
+
+         <!-- Read property file -->
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>properties-maven-plugin</artifactId>
+            <version>1.0.0</version>
+            <executions>
+               <execution>
+                  <phase>initialize</phase>
+                  <goals>
+                     <goal>read-project-properties</goal>
+                  </goals>
+                  <configuration>
+                     <files>
+                        <file>src/main/resources/jenkins.properties</file>
+                     </files>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         <!-- Deploy to Cloudhub -->
+         <plugin>
+            <groupId>org.mule.tools.maven</groupId>
+            <artifactId>mule-maven-plugin</artifactId>
+            <version>2.3.2</version>
+            <configuration>
+		        <cloudHubDeployment>
+		            <uri>https://anypoint.mulesoft.com</uri>
+		            <muleVersion>${mule.version}</muleVersion>
+		            <username>${anypoint.username}</username>
+		            <password>${anypoint.password}</password>
+		            <applicationName>mulesoft-jenkins-ci-cd</applicationName>
+		            <environment>${anypoint.environment}</environment>
+		            <properties>
+		                <key>value</key>
+		            </properties>
+		        </cloudHubDeployment>
+		    </configuration>
+           	<executions>
+               <execution>
+                  <id>deploy</id>
+                  <phase>deploy</phase>
+                  <goals>
+                     <goal>deploy</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+               <skip>true</skip>
+            </configuration>
+         </plugin>
 		</plugins>
 	</build>
+
 	<!-- Mule Dependencies -->
 	<dependencies>
 		<!-- Xml configuration -->
 		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-module-spring-config</artifactId>
+        	<groupId>com.mulesoft.muleesb</groupId>
+			<artifactId>mule-core-ee</artifactId>
+			<version>${mule.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Xml configuration -->
+		<dependency>
+			<groupId>com.mulesoft.muleesb.modules</groupId>
+			<artifactId>mule-module-spring-config-ee</artifactId>
 			<version>${mule.version}</version>
 			<scope>provided</scope>
 		</dependency>
@@ -65,14 +143,14 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.mule.transports</groupId>
-			<artifactId>mule-transport-jdbc</artifactId>
+        	<groupId>com.mulesoft.muleesb.transports</groupId>
+			<artifactId>mule-transport-jdbc-ee</artifactId>
 			<version>${mule.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.mule.transports</groupId>
-			<artifactId>mule-transport-jms</artifactId>
+        	<groupId>com.mulesoft.muleesb.transports</groupId>
+			<artifactId>mule-transport-jms-ee</artifactId>
 			<version>${mule.version}</version>
 			<scope>provided</scope>
 		</dependency>
@@ -102,13 +180,32 @@
 			<version>${mule.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-module-http</artifactId>
-			<version>${mule.version}</version>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 
+	<repositories>
+          <repository>
+            <id>Central</id>
+            <name>Central</name>
+            <url>http://repo1.maven.org/maven2/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
+            <url>http://repository.mulesoft.org/releases/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mulesoft-release</id>
+            <name>mulesoft release repository</name>
+            <layout>default</layout>
+            <url>http://repository.mulesoft.org/releases/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
