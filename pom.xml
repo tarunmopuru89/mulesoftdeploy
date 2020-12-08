@@ -22,15 +22,12 @@
 		</pluginRepositories>
 	<build>
 		<plugins>
-		<plugin>
+         <!-- Deploy to Cloudhub -->
+         <plugin>
 		  <groupId>org.mule.tools.maven</groupId>
 		  <artifactId>mule-maven-plugin</artifactId>
 		  <version>3.3.2</version>
 		  <extensions>true</extensions>
-		</plugin>
-         <!-- Deploy to Cloudhub -->
-         <plugin>
-		 
             <configuration>
 		        <cloudHubDeployment>
 		            <uri>https://anypoint.mulesoft.com</uri>
