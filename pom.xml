@@ -11,7 +11,7 @@
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<mule.version>4.0.0</mule.version>
+		<mule.version>3.9.4</mule.version>
     	<mule.tools.version>1.7</mule.tools.version>
 	</properties>
 
@@ -19,9 +19,6 @@
 		<plugins>
          <!-- Deploy to Cloudhub -->
          <plugin>
-            <groupId>org.mule.tools.maven</groupId>
-            <artifactId>mule-maven-plugin</artifactId>
-            <version>4.0.0</version>
             <configuration>
 		        <cloudHubDeployment>
 		            <uri>https://anypoint.mulesoft.com</uri>
