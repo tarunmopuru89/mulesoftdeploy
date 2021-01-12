@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>mulesample</groupId>
+	<groupId>novartispoc</groupId>
 	<artifactId>mulesoft-jenkins-ci-cd</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-	<name>Mule mulesoft-jenkins-ci-cd Application</name>
+	<name>Mule-application</name>
 
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,11 +31,12 @@
             <configuration>
 		        <cloudHubDeployment>
 		            <uri>https://anypoint.mulesoft.com</uri>
-		            <muleVersion>${mule.version}</muleVersion>
-		            <username>${anypoint.username}</username>
-		            <password>${anypoint.password}</password>
-		            <applicationName>mulesoft-jenkins-ci-cd</applicationName>
-		            <environment>${anypoint.environment}</environment>
+		            <muleVersion>3.3.2</muleVersion>
+		            <username>mopurupenchalatarunnovartis</username>
+		            <password>Varun@3010</password>
+		            <applicationName>mulesoft-app</applicationName>
+		            <environment>test</environment>
+					<workerType>MICRO</workerType>
 		            <properties>
 		                <key>value</key>
 		            </properties>
