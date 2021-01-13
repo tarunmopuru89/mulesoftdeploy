@@ -7,6 +7,8 @@
 	<artifactId>mulesoft-jenkins-ci-cd</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 	<name>Mule-application</name>
+	<packaging>mule-application</packaging>
+
 
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
